@@ -32,4 +32,9 @@ Either a separate battery pack, or an USB breakout board can be used to power th
 Only pins `1 & 2` are necessary for this application.
 
 -----
-License & logo 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="/img/logot/license.png">
+  <source media="(prefers-color-scheme: light)" srcset="/img/logot/license_lightmode.png">
+  <img alt="License logo" src="/img/logot/license.png">
+</picture>
+
