@@ -1,25 +1,24 @@
-# Verijälki
-Verijälki demonstraattorilla tutkitaan drone teknologian soveltuvuutta koirien verijälkikoulutukseen.
+# Blood trail drone
+The blood trail demonstrator is developed for evaluating the feasibility of drone technology in the field of training hunting dogs, by leaving a blood trail from a reservoir for the hunting dogs to tracks without contaminating the trails with traces of the trainer's presence during the formation of the training trail.
 
-## Tarvikkeet
+## Equipment
 * [DJI Mavic Pro](https://www.dji.com/fi/support/product/mavic)
 * [Arduino Nano](https://store.arduino.cc/products/arduino-nano)
-* 250ml ruisku
-* 5-6V DC peristatti pumppu
-* UART radiomoduulit
-* [Moottoriohjain-piirilevy](https://github.com/LaplandUAS/Verijalki/tree/main/pcb)
-* [3D-tulostetut osat](https://github.com/LaplandUAS/Verijalki/tree/main/cad)
+* 250mL syringe
+* Steel compression spring
+* 5-6V DC Peristatic pump
+* UART Transciever modules 2X
+* [Motor driver circuit](https://github.com/LaplandUAS/Verijalki/tree/main/pcb)
+* [3D printed parts and accessories](https://github.com/LaplandUAS/Verijalki/tree/main/cad)
 
-## Mekaniikka
-Demonstraattorin mekanikka on toteutettu droneen kiinnitettävällä nestemäisen painolastin annostelijalla. Tämä koostuu 250ml jousiladatusta ruiskusta (fig.1.0), jonka syöttöä ohjataan peristaattipumpulla (fig.1.1).
-Ruisku pysyy paineistettuna kompressiojousen (fig.1.2) avulla, mikä estää pumppua vetämästä ilmaa painolastiin.
-(Kuvio fig.1 tähän)
+## Mechatronics
+The demonstrator's mechatronics consist of a drone-mounted liquid payload dispenser, which is built of a spring loaded 250mL syringe, terminated with a peristatic pump for flow control. The syringe stays pressurised under the compression spring, and a peristatic pump is both used as a valve, and a method to mitigate clogs caused by blood coagulation and the low viscosity of anti-caking and anti-coagulation additives in low temperatures. The compression spring inhibits air from being pulled back into the payload.
 
-## Elektroniikka
-Pumpun syöttöä ohjataan langattomasti [HC-12](https://www.allaboutcircuits.com/projects/understanding-and-implementing-the-hc-12-wireless-transceiver-module/) lähetin/vastaanotin moduulia hyödyntäen.
-Lähettimen signaali dekoodataan sarjaliikenteestä Atmega168 mikrokontrolleripiirin (fig.2.0) avulla, mikä puolestaan ohjaa moottoria H-sillan avulla (fig 2.1). Lähettimen puolella on vastaava Atmega168 mikrokontrolleri Arduino Nanon muodossa (fig.2.2), joka
-kääntää potentiometrin (fig.2.3) vastusarvon sarjaliikenteeksi HC-12 moduulille. Pumpun ohjauspiirin virta saadaan dronen lisälaite portista, jonka micro-usb liitin on kytketty vasstaavasti:
-| Nasta  | Selite |
+## Electronics
+The pump's flow rate is controlled wirelessly utilizing a pair of [HC-12](https://www.allaboutcircuits.com/projects/understanding-and-implementing-the-hc-12-wireless-transceiver-module/) Transciever modules. Any other UART-based transcievers that operate in a completely transparent mode can be used without extra configuration. The transmitter's signal is decoded from serial by an Atmega168 microcontroller onboard the motor driver, which translates the signal to match the pump's flow rate issued by the transmitter via an H-bridge IC. The transmitter device consists of an Arduino Nano, a control potentiometer, a matching HC-12 transciever and a battery pack. The motor controller is also capable of transmitting a callback signal indicating the payload depletion once an embedded magnet in the syringe trips a reed-switch placed at the level of depletion on the syringe body.
+
+Either a separate battery pack, or an USB breakout board can be used to power the control circuit on board the drone. The Mavic Pro's add-on port uses a basic micro-USB connector in the following pin configuration:
+| Micro-USB Pin  | Label |
 | ------------- |:-------------:|
 | 1      | GND  |
 | 2      | 5V   |
@@ -27,12 +26,10 @@ kääntää potentiometrin (fig.2.3) vastusarvon sarjaliikenteeksi HC-12 moduuli
 | 4      |?     |
 | 5      |?     |
 
-Vain nastat 1 & 2 ovat tarpeellisia pumpun ohjaimen toiminnalle.
 > [!CAUTION]
-> DJI Mavic Pro:n lisälaiteväylä ei noudata perinteisiä micro-usb käytänköjä, eikä tämän vuoksi ole kytketty näiden mukaisesti. 
+> The DJI Mavic pro doesn't follow any USB standard for it's add-on port. Use third party devices on this port at your own risk!
 
-(Kuvio fig.2 tähän)
-
+Only pins `1 & 2` are necessary for this application.
 
 -----
-Lisenssi info & logot
+License & logo 
